@@ -69,16 +69,81 @@ Often used to model an assets returns (but not an assets price=> see lognormal d
     + pairwise correlations between individual security returns
     + For a full example of a multivariate distribution using a monte carlo simultion have a look at the [monte-carlo-for-investment](https://github.com/kconstable/monte-carlo-for-investments) github project
 
-#### Single Assets Returns
+#### Example 1: Single Assets Returns
 We can model individual asset returns, assuming they are independent from each other. We generate normal random varibles for each assets mean & standard deviation, then count the number of occurences for each event to determine the probabilities
 + Probbility that a1 <= 1 sigma below mu = 15.65%
 + Probabilty that a1 returns are between -1 sigma and +1 sigma = 68.26%
 + Probability that a1 returns are below 2 standard deviations below mu = 2.26%
 + Probability that a2 returns are less than 2 standard deviations below mu = 15.51%
 
-
 ![image](https://user-images.githubusercontent.com/1649676/222988165-36745104-7dab-4c8c-aff0-940fd7feb6b0.png)
 
+#### Example 2: Portfolio Shortfall Risk
+A Portfolio value is 800,000, and we want to ensure we can withdrawl $30,000 without invading the initial capital of the portfolio. Given three different portfolio allocations;
++ What is the return shortfall level?
++ which allocation is the best to preserve the captial above the shortfall level?
++ what is the probability the the optimal safety-first portfolio will be less than the shortfall level?
+
+| Allocation         | A  | B  | C  |
+|--------------------|----|----|----|
+| Expected Return    | 25 | 11 | 14 |
+| Standard Deviation | 27 | 8  | 20 |
 
 
++ Shortfall Level:3.75%
++ SFRatio (P1):0.79
++ SFRatio (P2):0.91<= optimal portfolio
++ SFRatio (P3):0.51
+
+![image](https://user-images.githubusercontent.com/1649676/222988611-3dd6f11d-720c-4411-8246-dd2ebfdc48c4.png)
+
+
+## Lognormal Distribution
+Lognormal distributions are often used to model a securities price, which have a minimum value of zero but no maximum value and skews to the right.  If you want to model a portfolios returns you can use a normal distribution or a students t-distribution
++ params
+    + mean of its normal distribution ln(y)
+    + standard deviation of its normal distribution ln(y)
+
+
+## Students T DistributionA
++ A family of symmetrical distributions with fatter tails than normal distribution, similar to asset returns
++ Defined by a single parameter=degrees of freedom (df) (sample-size)
++ The higher the df, the closer the t-distribution is to the normal distribution (the tails getter thinner with increasing sample size)
+
+#### Applications in Investments
++ Often used to model asset returns as it can provide a better estimate of downside risk estimates
++ The scipy library in python can be used to generate a t-distribution for a given assets mean, sigma and degrees of freedom
++ t-statistic
+    + test of a single population mean
+    + test of differences between two population means
+    + mean difference of paired (dependent) populations
+    + test of correlation coefficients
+
+![image](https://user-images.githubusercontent.com/1649676/222988806-886d90ba-d655-41d9-89ab-36819d8bf568.png)
+
+
+## Chi-Square Distribution
++ Asymmetrical family of distributions
++ sum of the squares of k independent standard random variables (will only have positive values)
++ The distribution varies with degrees of freedom
++ The scipy library in python can be used to generate a t-distribution for a given assets mean, sigma and degrees of freedom
+
+**Applications in Investments**
++ chi-square statistic
+    + test of variance of a normally distributed population
+![image](https://user-images.githubusercontent.com/1649676/222988918-73c99e3a-34f9-427f-900e-629ce601a281.png)
+
+
+## F-Distribution
++ Asymmetrical family of distributions
++ ratio of chi-squared distributions df(numerator)/df(denominator)
++ only positive values
++ as df increase, the f-distribution approaches the normal distribution
++ The scipy library in python can be used to generate a t-distribution for a given assets mean, and degrees of freedom for the denominator, and numerator
+
+**Applications in Investments**
++ F- statistic
+    + test of equality of variences of two normally distributed populations
+
+![image](https://user-images.githubusercontent.com/1649676/222989023-42781cb8-4cf1-49d3-92dd-9394a2536965.png)
 
